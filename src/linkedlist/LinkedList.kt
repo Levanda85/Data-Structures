@@ -47,7 +47,7 @@ class LinkedList<T> {
         }
     }
 
-    //This method has time complexity as O(2n) and it means O(n)
+    //This method has time complexity O(n)
     fun contains(value: T): Boolean {
         var currentNode = head
         while (currentNode?.value != value && currentNode != tail) {
@@ -63,8 +63,7 @@ class LinkedList<T> {
                 head = null
                 tail = null
             } else {
-                val index = indexOf(value)
-                when (index) {
+                when (val index = indexOf(value)) {
                     0 -> head = head!!.next
                     size - 1 -> {
                         tail = get(size - 2)
@@ -84,7 +83,7 @@ class LinkedList<T> {
         }
     }
 
-    //This method has time complexity as O(2n) and it means O(n)
+    //This method has time complexity as O(4n) and it means O(n)
     fun removeAt(index: Int): Boolean {
         val currentNode = get(index)
         if (currentNode != null) {

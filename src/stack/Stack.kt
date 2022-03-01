@@ -57,6 +57,7 @@ class Stack<T> {
         return currentNode
     }
 
+    //This method has time complexity as O(n)
     fun get(index: Int): Node<T>? {
         if (index in 0 until size) {
             var currentNode = head
