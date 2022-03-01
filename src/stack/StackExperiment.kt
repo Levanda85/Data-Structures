@@ -19,4 +19,6 @@ fun main() {
     println(stack)
     stack.pop()
     println(stack)
+
+    println(stack.size())
 }
