@@ -5,6 +5,7 @@ class LinkedList<T> {
     private var tail: Node<T>? = null
     private var size = 0
 
+    //This method has time complexity as O(1)
     fun add(value: T) {
         if (isEmpty()) {
             head = Node(value = value, next = null)
@@ -18,6 +19,7 @@ class LinkedList<T> {
         size++
     }
 
+    //This method has time complexity O(n)
     fun add(index: Int, value: T) {
         var currentNode = head
         var currentIndex = 0
@@ -45,6 +47,7 @@ class LinkedList<T> {
         }
     }
 
+    //This method has time complexity as O(2n) and it means O(n)
     fun contains(value: T): Boolean {
         var currentNode = head
         while (currentNode?.value != value && currentNode != tail) {
@@ -53,6 +56,7 @@ class LinkedList<T> {
         return currentNode?.value == value
     }
 
+    //This method has time complexity as O(3n) and it means O(n)
     fun remove(value: T): Boolean {
         if (this.contains(value)) {
             if (size == 1) {
@@ -80,6 +84,7 @@ class LinkedList<T> {
         }
     }
 
+    //This method has time complexity as O(2n) and it means O(n)
     fun removeAt(index: Int): Boolean {
         val currentNode = get(index)
         if (currentNode != null) {
@@ -89,6 +94,7 @@ class LinkedList<T> {
         return false
     }
 
+    //This method has time complexity as O(n)
     fun indexOf(value: T): Int {
         var currentNode = head
         var currentIndex = 0
@@ -101,6 +107,7 @@ class LinkedList<T> {
         return if (currentNode != null) currentIndex else -1
     }
 
+    //This method has time complexity as O(n)
     fun get(index: Int): Node<T>? {
         if (index in 0 until size) {
             var currentNode = head
@@ -117,8 +124,10 @@ class LinkedList<T> {
         throw IllegalArgumentException()
     }
 
+    //This method has time complexity as O(1)
     fun size(): Int = size
 
+    //This method has time complexity as O(n)
     fun clear() {
         if (size != 0) {
             for (i in 0 until size) {
@@ -129,10 +138,12 @@ class LinkedList<T> {
         }
     }
 
+    //This method has time complexity as O(1)
     fun isEmpty(): Boolean {
         return size == 0
     }
 
+    //This method has time complexity as O(n)
     override fun toString(): String {
         return if (isEmpty()) {
             "Empty list"
