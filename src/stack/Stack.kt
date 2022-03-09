@@ -3,20 +3,20 @@ package stack
 import linkedlist.Node
 
 class Stack<T> {
-    private var bottom: Node<T>? = null
-    private var top: Node<T>? = null
+    private var bottom: StackNode<T>? = null
+    private var top: StackNode<T>? = null
     private var size = 0
 
     //This method has time complexity as O(1)
     fun push(value: T) {
         if (isEmpty()) {
-            bottom = Node(value = value, next = null)
+            bottom = StackNode(value = value, next = null)
             top = bottom
             size++
             return
         }
 
-        top!!.next = Node(value = value)
+        top!!.next = StackNode(value = value)
         top = top!!.next
         size++
     }
@@ -40,7 +40,7 @@ class Stack<T> {
     fun size(): Int = size
 
     //This method has time complexity as O(n)
-    private fun get(index: Int): Node<T>? {
+    private fun get(index: Int): StackNode<T>? {
         if (index in 0 until size) {
             var currentNode = bottom
             var currentIndex = 0

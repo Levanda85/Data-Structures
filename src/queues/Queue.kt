@@ -3,20 +3,20 @@ package queues
 import linkedlist.Node
 
 class Queue<T> {
-    private var first: Node<T>? = null
-    private var last: Node<T>? = null
+    private var first: QueueNode<T>? = null
+    private var last: QueueNode<T>? = null
     private var size = 0
 
     //This method has time complexity as O(1)
     fun push(value: T) {
         if (isEmpty()) {
-            first = Node(value = value, next = null)
+            first = QueueNode(value = value, next = null)
             last = first
             size++
             return
         }
 
-        last!!.next = Node(value = value)
+        last!!.next = QueueNode(value = value)
         last = last!!.next
         size++
     }
