@@ -1,30 +1,53 @@
 package binarysearchtree
 
-data class BinarySearchTree( // burda sadece root olcak, Nodenin left right data.
-    var data: Int,
-    var left: BinarySearchTree? = null,
-    var right: BinarySearchTree? = null
-) {
-    fun insert(value: Int) {
-        when {
-            value <= data && left != null -> left!!.insert(value)
-            value <= data -> left = BinarySearchTree(value)
-            value > data && right != null -> right!!.insert(value)
-            value > data -> right = BinarySearchTree(value)
+class BinarySearchTree {
+
+    var root: BinarySearchNode? = null
+
+    fun insert(data: Int) {
+        val node = BinarySearchNode(data)
+        if (root == null) {
+            root = node
+            return
         }
+        var prev: BinarySearchNode? = null
+        var currentNode: BinarySearchNode? = root
+        while (currentNode != null) {
+            if (currentNode.data > data) {
+                prev = currentNode
+                currentNode = currentNode.left
+            } else if (currentNode.data <= data) {
+                prev = currentNode
+                currentNode = currentNode.right
+            }
+        }
+        if (prev!!.data > data) prev.left = node else prev.right = node
     }
 
     fun contains(value: Int): Boolean {
-        if (value < data && left != null) {
-            return left!!.contains(value)
+        var currentNode = root
+        while (currentNode?.data != value) {
+            when {
+                value < currentNode!!.data -> {
+                    if (currentNode.left != null) {
+                        currentNode = currentNode.left
+                    } else {
+                        return false
+                    }
+                }
+                value > currentNode.data -> {
+                    if (currentNode.right != null) {
+                        currentNode = currentNode.right
+                    } else {
+                        return false
+                    }
+                }
+            }
         }
-        if (value > data && right != null) {
-            return right!!.contains(value)
-        }
-        return value == data
+        return currentNode.data == value
     }
 
-    fun remove(value: Int, parent: BinarySearchTree): Boolean {
+    /*fun remove(value: Int, parent: BinarySearchTree): Boolean {
         if (contains(value)) when {
             value < data && left != null -> {
                 return left!!.remove(value, this)
@@ -67,5 +90,5 @@ data class BinarySearchTree( // burda sadece root olcak, Nodenin left right data
         }
     }
 
-    fun min(): Int = if (left == null) data else left!!.min()
+    fun min(): Int = if (left == null) data else left!!.min()*/
 }
