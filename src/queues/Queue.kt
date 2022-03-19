@@ -1,7 +1,5 @@
 package queues
 
-import linkedlist.Node
-
 class Queue<T> {
     private var first: QueueNode<T>? = null
     private var last: QueueNode<T>? = null

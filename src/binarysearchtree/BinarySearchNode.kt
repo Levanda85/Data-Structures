@@ -1,3 +1,7 @@
 package binarysearchtree
 
-data class BinarySearchNode(var data: Int, var left: BinarySearchNode? = null, var right: BinarySearchNode? = null)
+data class BinarySearchNode(
+    var data: Int,
+    var leftChild: BinarySearchNode? = null,
+    var rightChild: BinarySearchNode? = null
+)

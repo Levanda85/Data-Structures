@@ -1,7 +1,5 @@
 package stack
 
-import linkedlist.Node
-
 class Stack<T> {
     private var bottom: StackNode<T>? = null
     private var top: StackNode<T>? = null

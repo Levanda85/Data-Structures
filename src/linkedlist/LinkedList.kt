@@ -1,20 +1,20 @@
 package linkedlist
 
 class LinkedList<T> {
-    private var head: Node<T>? = null
-    private var tail: Node<T>? = null
+    private var head: LinkedListNode<T>? = null
+    private var tail: LinkedListNode<T>? = null
     private var size = 0
 
     //This method has time complexity as O(1)
     fun add(value: T) {
         if (isEmpty()) {
-            head = Node(value = value, next = null)
+            head = LinkedListNode(value = value, next = null)
             tail = head
             size++
             return
         }
 
-        tail!!.next = Node(value = value)
+        tail!!.next = LinkedListNode(value = value)
         tail = tail!!.next
         size++
     }
@@ -29,7 +29,7 @@ class LinkedList<T> {
             currentIndex++
         }
 
-        val newNode: Node<T> = Node(value = value, next = null)
+        val newNode: LinkedListNode<T> = LinkedListNode(value = value, next = null)
         when {
             index > size -> println("You can't add an element at index $index, last index is ${size - 1}")
             index == size -> add(value)
@@ -107,7 +107,7 @@ class LinkedList<T> {
     }
 
     //This method has time complexity as O(n)
-    fun get(index: Int): Node<T>? {
+    fun get(index: Int): LinkedListNode<T>? {
         if (index in 0 until size) {
             var currentNode = head
             var currentIndex = 0

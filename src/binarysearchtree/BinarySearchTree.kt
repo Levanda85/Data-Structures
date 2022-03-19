@@ -10,110 +10,89 @@ class BinarySearchTree {
             root = node
             return
         }
-        var prev: BinarySearchNode? = null
-        var currentNode: BinarySearchNode? = root
-        while (currentNode != null) {
-            if (currentNode.data > data) {
-                prev = currentNode
-                currentNode = currentNode.left
-            } else if (currentNode.data <= data) {
-                prev = currentNode
-                currentNode = currentNode.right
+
+        insertNode(root!!, node)
+    }
+
+    private fun insertNode(parent: BinarySearchNode, node: BinarySearchNode) {
+        if (node.data >= parent.data) {
+            if (parent.rightChild == null) {
+                parent.rightChild = node
+            } else {
+                insertNode(parent.rightChild!!, node)
+            }
+        } else {
+            if (parent.leftChild == null) {
+                parent.leftChild = node
+            } else {
+                insertNode(parent.leftChild!!, node)
             }
         }
-        if (prev!!.data > data) prev.left = node else prev.right = node
     }
 
     fun contains(data: Int): Boolean {
-        var currentNode = root
-        while (currentNode?.data != data) {
-            when {
-                data < currentNode!!.data -> {
-                    if (currentNode.left != null) {
-                        currentNode = currentNode.left
-                    } else {
-                        return false
-                    }
-                }
-                data > currentNode.data -> {
-                    if (currentNode.right != null) {
-                        currentNode = currentNode.right
-                    } else {
-                        return false
-                    }
-                }
-            }
-        }
-        return currentNode.data == data
-    }
-
-    fun remove(data: Int): Boolean {
-        if (contains(data)) {
-            var prev: BinarySearchNode? = null
-            var currentNode: BinarySearchNode? = root
-            while (currentNode != null && currentNode.data != data) {
-                if (currentNode.data > data) {
-                    prev = currentNode
-                    currentNode = currentNode.left
-                } else if (currentNode.data <= data) {
-                    prev = currentNode
-                    currentNode = currentNode.right
-                }
-            }
-            when {
-                currentNode!!.left == null && currentNode.right == null && currentNode == prev!!.left -> {
-                    prev.left = null
-                }
-                currentNode.left == null && currentNode.right == null && currentNode == prev!!.right -> {
-                    prev.right = null
-                }
-                currentNode.left != null && currentNode.right == null && currentNode == prev!!.left -> {
-                    prev.left = currentNode.left
-                }
-                currentNode.left != null && currentNode.right == null && currentNode == prev!!.right -> {
-                    prev.right = currentNode.left
-                }
-                currentNode.right != null && currentNode.left == null && currentNode == prev!!.left -> {
-                    prev.left = currentNode.right
-                }
-                currentNode.right != null && currentNode.left == null && currentNode == prev!!.right -> {
-                    prev.right = currentNode.right
-                }
-                currentNode.data == root!!.data -> {
-                    root!!.right!!.left = root!!.left
-                    root = root!!.right
-                }
-            }
-            return true
-        } else {
-            println("$data is not in the tree")
+        if (root == null) {
             return false
         }
+
+        return containsNode(root!!, data)
     }
 
-    /* when {
-         left == null && right == null && this == parent.left -> {
-             parent.left = null
-         }
-         left == null && right == null && this == parent.right -> {
-             parent.right = null
-         }
-         left != null && right == null && this == parent.left -> {
-             parent.left = this.left
-         }
-         left != null && right == null && this == parent.right -> {
-             parent.right = this.left
-         }
-         right != null && left == null && this == parent.left -> {
-             parent.left = this.right
-         }
-         right != null && left == null && this == parent.right -> {
-             parent.right = this.right
-         }
-         else -> {
-             data = right!!.min()
-             right!!.remove(data, this)
-         }
-     }
-     return true*/
+    private fun containsNode(parent: BinarySearchNode, data: Int): Boolean {
+
+        if (data > parent.data && parent.rightChild != null) {
+            return containsNode(parent.rightChild!!, data)
+        } else if (data < parent.data && parent.leftChild != null) {
+            return containsNode(parent.leftChild!!, data)
+        }
+        return parent.data == data
+    }
+
+
+    fun remove(data: Int): Boolean {
+        return if (contains(data)) {
+            removeNode(root!!, data)
+            return true
+        } else {
+            println("$data not in the tree")
+            false
+        }
+    }
+
+    private fun removeNode(node: BinarySearchNode?, data: Int): BinarySearchNode? {
+        if (node == null) {
+            return null
+        }
+        if (data < node.data) node.leftChild = removeNode(node.leftChild!!, data)
+        else if (data > node.data) node.rightChild = removeNode(node.rightChild!!, data)
+        else {
+            if (node.leftChild == null && node.rightChild == null) {
+                return null
+            } else if (node.leftChild == null) {
+                node.data = minValue(node.rightChild!!).data
+                node.rightChild = removeNode(node.rightChild!!, node.rightChild!!.data)
+            } else if (node.rightChild == null) {
+                node.data = maxValue(node.leftChild!!).data
+                node.leftChild = removeNode(node.leftChild!!, node.leftChild!!.data)
+            } else {
+                node.data = minValue(node.rightChild!!).data
+                node.rightChild = removeNode(node.rightChild!!, node.rightChild!!.data)
+            }
+        }
+        return node
+    }
+
+    private fun minValue(node: BinarySearchNode): BinarySearchNode {
+        while (node.leftChild != null) {
+            root = node.leftChild!!
+        }
+        return node
+    }
+
+    fun maxValue(node: BinarySearchNode): BinarySearchNode {
+        while (node.rightChild != null) {
+            root = node.rightChild!!
+        }
+        return node
+    }
 }
