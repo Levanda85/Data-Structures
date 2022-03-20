@@ -51,8 +51,8 @@ class BinarySearchTree {
 
     fun remove(data: Int): Boolean {
         return if (contains(data)) {
-            removeNode(root!!, data)
-            return true
+            removeNode(root, data)
+            true
         } else {
             println("$data not in the tree")
             false
@@ -70,29 +70,29 @@ class BinarySearchTree {
                 return null
             } else if (node.leftChild == null) {
                 node.data = minValue(node.rightChild!!).data
-                node.rightChild = removeNode(node.rightChild!!, node.rightChild!!.data)
+                node.rightChild = removeNode(node.rightChild!!, node.data)
             } else if (node.rightChild == null) {
                 node.data = maxValue(node.leftChild!!).data
-                node.leftChild = removeNode(node.leftChild!!, node.leftChild!!.data)
+                node.leftChild = removeNode(node.leftChild!!, node.data)
             } else {
                 node.data = minValue(node.rightChild!!).data
-                node.rightChild = removeNode(node.rightChild!!, node.rightChild!!.data)
+                node.rightChild = removeNode(node.rightChild!!, node.data)
             }
         }
         return node
     }
 
     private fun minValue(node: BinarySearchNode): BinarySearchNode {
-        while (node.leftChild != null) {
-            root = node.leftChild!!
+        if (node.leftChild == null) {
+            return node
         }
-        return node
+        return minValue(node.leftChild!!)
     }
 
-    fun maxValue(node: BinarySearchNode): BinarySearchNode {
-        while (node.rightChild != null) {
-            root = node.rightChild!!
+    private fun maxValue(node: BinarySearchNode): BinarySearchNode {
+        if (node.rightChild == null) {
+            return node
         }
-        return node
+        return minValue(node.rightChild!!)
     }
 }
